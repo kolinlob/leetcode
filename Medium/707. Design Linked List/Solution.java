@@ -1,13 +1,11 @@
 class MyLinkedList {
     private int size;
     private Node head;
-    private Node tail;
 
     /** Initialize your data structure here. */
     public MyLinkedList() {
         size = 0;
         head = null;
-        tail = head;
     }
 
     /**
@@ -15,16 +13,20 @@ class MyLinkedList {
      * invalid, return -1.
      */
     public int get(int index) {
-        if (index >= size)
-            return -1;
+        Node cur = getNode(index);
+        return cur == null ? -1 : cur.val;
+    }
 
-        Node cur = head;
+    private Node getNode(int index) {
+        if (index < 0 || index >= size)
+            return null;
+
+        Node n = head;
         int count = 0;
+        while (n == null || count++ < index)
+            n = n.next;
 
-        while (count++ < index)
-            cur = cur.next;
-
-        return cur.val;
+        return n;
     }
 
     /**
@@ -32,26 +34,12 @@ class MyLinkedList {
      * the insertion, the new node will be the first node of the linked list.
      */
     public void addAtHead(int val) {
-        Node newNode = new Node(val, head);
-        head = newNode;
-
-        if (tail == null)
-            tail = head;
-
-        size++;
+        addAtIndex(0, val);
     }
 
     /** Append a node of value val to the last element of the linked list. */
     public void addAtTail(int val) {
-        if (tail == null) {
-            addAtHead(val);
-            return;
-        }
-
-        Node newNode = new Node(val);
-        tail.next = newNode;
-        tail = newNode;
-        size++;
+        addAtIndex(size, val);
     }
 
     /**
@@ -64,25 +52,16 @@ class MyLinkedList {
         if (index > size)
             return;
 
-        if (index == 0) {
-            addAtHead(val);
-            return;
+        Node node = new Node(val);
+        Node prev = getNode(index - 1);
+
+        if (prev == null) {
+            node.next = head;
+            head = node;
+        } else {
+            node.next = prev.next;
+            prev.next = node;
         }
-
-        if (index == size) {
-            addAtTail(val);
-            return;
-        }
-
-        Node newNode = new Node(val);
-        Node prev = head;
-        int count = 0;
-
-        while (count++ < index - 1)
-            prev = prev.next;
-
-        newNode.next = prev.next;
-        prev.next = newNode;
         size++;
     }
 
@@ -91,21 +70,12 @@ class MyLinkedList {
         if (index >= size)
             return;
 
-        Node prev = head;
-        if (index == 0)
+        Node prev = getNode(index - 1);
+        if (prev == null)
             head = head.next;
         else {
-            int count = 0;
-            while (count++ < index - 1)
-                prev = prev.next;
-
             Node del = prev.next;
-
-            if (tail == del) {
-                tail = prev;
-                tail.next = null;
-            } else
-                prev.next = del.next;
+            prev.next = del.next;
         }
 
         size--;
@@ -118,11 +88,6 @@ class MyLinkedList {
         public Node(int val) {
             this.val = val;
             this.next = null;
-        }
-
-        public Node(int val, Node next) {
-            this.val = val;
-            this.next = next;
         }
     }
 }
