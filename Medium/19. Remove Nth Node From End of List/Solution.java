@@ -17,7 +17,7 @@ class Solution {
         ListNode rear = aux;
 
         for (int i = 0; i <= n; i++)
-        front = front.next;
+            front = front.next;
 
         while (front != null) {
             front = front.next;
