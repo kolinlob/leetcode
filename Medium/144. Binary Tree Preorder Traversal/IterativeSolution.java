@@ -14,21 +14,28 @@
  * }
  */
 class Solution {
-    public List<Integer> preorderTraversal(TreeNode root) {
+    public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-
         Deque<TreeNode> stack = new LinkedList<>();
-        stack.push(root);
 
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-            if (node == null)
+        TreeNode current = root;
+        stack.push(current);
+
+        while (!stack.isEmpty() || current != null) {
+            while (current != null && current.left != null) {
+                current = current.left;
+                stack.push(current);
+            }
+
+            TreeNode popped = stack.pop();
+            if (popped == null)
                 continue;
 
-            result.add(node.val);
+            result.add(popped.val);
 
-            stack.push(node.right);
-            stack.push(node.left);
+            current = popped.right;
+            if (current != null)
+                stack.push(current);
         }
 
         return result;
