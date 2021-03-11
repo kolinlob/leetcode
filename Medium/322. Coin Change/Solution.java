@@ -1,21 +1,15 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for (int coin : coins)
-            pq.add(coin);
+        double[] dp = new double[amount + 1];
+        Arrays.fill(dp, Double.POSITIVE_INFINITY);
+        dp[0] = 0;
 
-        double[] w = new double[amount + 1];
-        Arrays.fill(w, Double.POSITIVE_INFINITY);
-        w[0] = 0;
-
-        while (!pq.isEmpty()) {
-            int coin = pq.poll();
-
-            for (int i = coin; i < w.length; i++)
-                if (i - coin >= 0)
-                    w[i] = Math.min(w[i - coin] + 1, w[i]);
+        for (int coin : coins) {
+            for (int i = coin; i < dp.length; i++)
+                if (i - coin >= 0 && dp[i - coin] + 1 < dp[i])
+                    dp[i] = dp[i - coin] + 1;
         }
 
-        return w[amount] == Double.POSITIVE_INFINITY ? -1 : (int) w[amount];
+        return dp[amount] == Double.POSITIVE_INFINITY ? -1 : (int) dp[amount];
     }
 }
