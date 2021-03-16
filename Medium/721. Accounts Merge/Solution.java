@@ -7,7 +7,7 @@ class Solution {
         for (List<String> account : accounts)
             emailsCount += account.size() - 1;
 
-        WUF wuf = new WUF(emailsCount + 1);
+        DSU dsu = new DSU(emailsCount + 1);
         int id = 0;
 
         for (List<String> account : accounts) {
@@ -19,13 +19,13 @@ class Solution {
                 if (!emailID.containsKey(email))
                     emailID.put(email, id++);
 
-                wuf.union(emailID.get(account.get(1)), emailID.get(email));
+                dsu.union(emailID.get(account.get(1)), emailID.get(email));
             }
         }
 
         Map<Integer, List<String>> merged = new HashMap();
         for (String email : emailName.keySet()) {
-            int ix = wuf.find(emailID.get(email));
+            int ix = dsu.find(emailID.get(email));
             merged.computeIfAbsent(ix, x -> new ArrayList()).add(email);
         }
 
@@ -37,11 +37,11 @@ class Solution {
         return new ArrayList(merged.values());
     }
 
-    private class WUF {
+    private class DSU {
         private int[] parent;
         private int[] size;
 
-        public WUF(int n) {
+        public DSU(int n) {
             parent = new int[n];
             size = new int[n];
 
