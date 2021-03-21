@@ -7,19 +7,18 @@ class Solution {
         Arrays.sort(strN);
 
         for (int i = 0; i < 30; i++) {
-            int cur = (1 << i);
-            char[] strCur = Integer.toString(cur).toCharArray();
+            char[] cur = Integer.toString(1 << i).toCharArray();
 
-            if (strCur.length < strN.length)
+            if (cur.length < strN.length)
                 continue;
 
-            if (strCur.length == strN.length) {
-                Arrays.sort(strCur);
-                if (Arrays.equals(strCur, strN))
+            if (cur.length == strN.length) {
+                Arrays.sort(cur);
+                if (Arrays.equals(cur, strN))
                     return true;
             }
 
-            if (strCur.length > strN.length)
+            if (cur.length > strN.length)
                 return false;
         }
 
