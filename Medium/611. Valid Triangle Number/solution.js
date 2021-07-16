@@ -10,19 +10,10 @@ var triangleNumber = function (nums) {
   for (let i = 0; i < n - 2; i++) {
     let k = i + 2;
     for (let j = i + 1; j < n - 1 && nums[i]; j++) {
-      k = bs(k, n - 1, sorted[i] + sorted[j]);
-      count += k - j;
+      while (k < n && sorted[i] + sorted[j] > sorted[k]) k++;
+      count += k - j - 1;
     }
   }
 
   return count;
-
-  function bs(lo, hi, tar) {
-    while (lo <= hi && hi < n) {
-      let mid = (lo + hi) >> 1;
-      if (sorted[mid] < tar) lo = mid + 1;
-      else hi = mid - 1;
-    }
-    return hi;
-  }
 };
