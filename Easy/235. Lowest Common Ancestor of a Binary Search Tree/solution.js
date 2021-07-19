@@ -7,8 +7,11 @@
 var lowestCommonAncestor = function (root, p, q) {
   if (!root || root == p || root == q) return root;
 
-  let left = lowestCommonAncestor(root.left, p, q);
-  let right = lowestCommonAncestor(root.right, p, q);
+  if (root.val > p.val && root.val > q.val)
+    return lowestCommonAncestor(root.left, p, q);
 
-  return left && right ? root : left || right;
+  if (root.val < p.val && root.val < q.val)
+    return lowestCommonAncestor(root.right, p, q);
+
+  return root;
 };
