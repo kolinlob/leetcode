@@ -3,30 +3,28 @@
  * @return {number}
  */
 var maxAreaOfIsland = function (grid) {
-  const m = grid.length, n = grid[0].length;
-  let maxArea = 0;
+  const directions = [
+    { x: 1, y: 0 },
+    { x: 0, y: 1 },
+    { x: -1, y: 0 },
+    { x: 0, y: -1 },
+  ];
 
-  const visited = new Array(m);
-  for (let i = 0; i < m; i++) visited[i] = new Array(n).fill(false);
+  let max = 0;
 
-  for (let r = 0; r < m; r++) {
-    for (let c = 0; c < n; c++)
-      maxArea = Math.max(maxArea, dfsArea(r, c));
-  }
+  for (let row = 0; row < grid.length; row++)
+    for (let col = 0; col < grid[row].length; col++)
+      if (grid[row][col] == 1)
+        max = Math.max(max, dfs(row, col));
 
-  return maxArea;
+  return max;
 
-  function dfsArea(r, c) {
-    if (r < 0 || c < 0 || r >= m || c >= n || visited[r][c] || grid[r][c] == 0)
+  function dfs(row, col) {
+    if (row < 0 || col < 0 || row >= grid.length || col >= grid[row].length || grid[row][col] != 1)
       return 0;
 
-    visited[r][c] = true;
-    return (
-      1 +
-      dfsArea(r - 1, c) +
-      dfsArea(r + 1, c) +
-      dfsArea(r, c - 1) +
-      dfsArea(r, c + 1)
-    );
+    grid[row][col] = -1;
+
+    return (1 + directions.reduce((acc, cur) => acc + dfs(row + cur.x, col + cur.y), 0));
   }
 };
