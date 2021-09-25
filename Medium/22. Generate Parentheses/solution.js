@@ -3,19 +3,14 @@
  * @return {string[]}
  */
 var generateParenthesis = function (n) {
-  let res = [];
-
-  permutate([], 0, 0);
-
+  const res = [];
+  perm("", 0, 0);
   return res;
 
-  function permutate(cur, op, cl) {
-    if (cur.length == n * 2) {
-      res.push(cur.join(""));
-      return;
-    }
+  function perm(cur, o, c) {
+    if (o == n && c == n) return res.push(cur);
 
-    op < n  && permutate(cur.concat("("), op + 1, cl);
-    op > cl && permutate(cur.concat(")"), op, cl + 1);
+    o < n && perm(cur + "(", o + 1, c);
+    c < o && perm(cur + ")", o, c + 1);
   }
 };
