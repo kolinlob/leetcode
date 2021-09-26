@@ -3,7 +3,7 @@
  * @return {number}
  */
 var rob = function (nums) {
-  if (nums.length == 1) return dpRob(nums);
+  if (nums.length == 1) return nums[0];
 
   return Math.max(dpRob(nums.slice(1)), dpRob(nums.slice(0, nums.length - 1)));
 
