@@ -3,15 +3,19 @@
  * @param {TreeNode} subRoot
  * @return {boolean}
  */
-var isSubtree = function (root, subRoot) {
-  if (root == null) return false;
-  if (same(root, subRoot)) return true;
-  return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
-
-  function same(node1, node2) {
-    if (node1 == null && node2 == null) return true;
-    if (node1 == null || node2 == null) return false;
-    if (node1.val != node2.val) return false;
-    return same(node1.left, node2.left) && same(node1.right, node2.right);
+ var isSubtree = function(root, subRoot) {
+  return root == null
+      ? false
+      : same(root, subRoot)
+          ? true
+          : isSubtree(root.left, subRoot) ||
+            isSubtree(root.right, subRoot);
+  
+  function same(tree1, tree2) {
+      if(tree1 == null && tree2 == null) return true;
+      if(tree1 == null || tree2 == null) return false;
+      return tree1.val == tree2.val &&
+          same(tree1.left, tree2.left) &&
+          same(tree1.right, tree2.right);
   }
 };
