@@ -14,7 +14,8 @@ var preorderTraversal = function (root) {
       current = current.left;
     }
 
-    current = stack.pop().right;
+    current = stack.pop();
+    current = current.right;
   }
 
   return preorder;
