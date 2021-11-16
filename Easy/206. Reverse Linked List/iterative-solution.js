@@ -3,14 +3,14 @@
  * @return {ListNode}
  */
 var reverseList = function (head) {
-  let node = head, prev = null;
+  let current = head, previous = null;
 
-  while (node) {
-    let next = node.next;
-    node.next = prev;
-    prev = node;
-    node = next;
+  while (current) {
+    let next = current.next;
+    current.next = previous;
+    previous = current;
+    current = next;
   }
 
-  return prev;
+  return previous;
 };
