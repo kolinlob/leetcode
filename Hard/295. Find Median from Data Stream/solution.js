@@ -9,13 +9,10 @@ class MedianFinder {
    * @return {void}
    */
   addNum(num) {
-    if (this.smaller.size() == 0 || this.smaller.front().element >= num)
-      this.smaller.enqueue(num);
-    else this.larger.enqueue(num);
+    this.smaller.enqueue(num);
+    this.larger.enqueue(this.smaller.dequeue().element);
 
-    if (this.smaller.size() > this.larger.size() + 1)
-      this.larger.enqueue(this.smaller.dequeue().element);
-    else if (this.larger.size() > this.smaller.size())
+    if (this.larger.size() > this.smaller.size())
       this.smaller.enqueue(this.larger.dequeue().element);
   }
 
@@ -23,9 +20,8 @@ class MedianFinder {
    * @return {number}
    */
   findMedian() {
-    if (this.smaller.size() > this.larger.size())
-      return this.smaller.front().element;
-    else
-      return (this.smaller.front().element + this.larger.front().element) / 2;
+    return this.smaller.size() > this.larger.size()
+      ? this.smaller.front().element
+      : (this.smaller.front().element + this.larger.front().element) / 2;
   }
 }
