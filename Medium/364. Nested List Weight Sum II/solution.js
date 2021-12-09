@@ -3,8 +3,8 @@
  * @return {number}
  */
 var depthSumInverse = function (nestedList) {
-  let max = -Infinity, pairs = flat(nestedList, 1);
-  return pairs.reduce((s, [n, d]) => s + (max - d + 1) * n, 0);
+  let max = -Infinity;
+  return flat(nestedList, 1).reduce((s, [n, d]) => s + (max - d + 1) * n, 0);
 
   function flat(nested, depth) {
     let res = [];
