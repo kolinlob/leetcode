@@ -3,17 +3,12 @@ function merge(intervals: number[][]): number[][] {
 
   intervals.sort((a, b) => a[0] - b[0]);
 
-  let merged: number[][] = [];
-  let first = intervals.shift();
+  let merged: number[][] = [intervals.shift()];
 
-  while (intervals.length > 0) {
-    let second = intervals.shift();
-    if (second[0] > first[1]) {
-      merged.push([...first]);
-      first = second;
-    } else first = [first[0], Math.max(first[1], second[1])];
+  for (let i of intervals) {
+    if (merged[merged.length - 1][1] < i[0]) merged.push([...i]);
+    else merged[merged.length - 1][1] = Math.max(merged[merged.length - 1][1], i[1]);
   }
 
-  merged.push(first);
   return merged;
 }
