@@ -3,8 +3,9 @@ function kClosest(points: number[][], k: number): number[][] {
     priority: (a: { d: number; i: number }) => a.d,
   });
 
-  for (let [i, [x, y]] of points.entries()) {
-    maxheap.enqueue({ d: Math.sqrt(x * x + y * y), i });
+  for (let i = 0; i < points.length; ++i) {
+    let [x, y] = points[i];
+    maxheap.enqueue({ d: x * x + y * y, i });
 
     if (maxheap.size() > k) maxheap.dequeue();
   }
