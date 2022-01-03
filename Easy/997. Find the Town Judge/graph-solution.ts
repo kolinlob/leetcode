@@ -10,7 +10,7 @@ function findJudge(n: number, trust: number[][]): number {
   }
 
   for (let [k, v] of grapgh.entries())
-    if (v.o.length == 0 && v.i.length == n - 1 && v.i.indexOf(k) == -1)
+    if (v.o.length == 0 && v.i.length == n - 1)
       return k;
 
   return -1;
