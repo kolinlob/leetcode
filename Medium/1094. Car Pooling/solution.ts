@@ -10,8 +10,7 @@ function carPooling(trips: number[][], capacity: number): boolean {
     let trip = starts.dequeue().element;
 
     while (!stops.isEmpty() && trip[1] >= stops.front().element[2])
-      if (trip[1] >= stops.front().element[2])
-        currentCapacity += stops.dequeue().element[0];
+      currentCapacity += stops.dequeue().element[0];
 
     currentCapacity -= trip[0];
 
