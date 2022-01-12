@@ -7,12 +7,9 @@ function minMeetingRooms(intervals: number[][]): number {
 
   while (!starts.isEmpty()) {
     let current = starts.dequeue().element;
-    rooms += 1;
 
-    if (!ends.isEmpty() && current[0] >= ends.front().element[1]) {
-      rooms -= 1;
-      ends.dequeue();
-    }
+    if (ends.isEmpty() || current[0] < ends.front().element[1]) rooms += 1;
+    else ends.dequeue();
 
     ends.enqueue(current);
   }
