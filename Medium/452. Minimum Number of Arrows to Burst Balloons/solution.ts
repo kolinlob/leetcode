@@ -1,4 +1,6 @@
 function findMinArrowShots(points: number[][]): number {
+  if (points.length <= 1) return points.length;
+
   let minArrows = points.length;
 
   points.sort((a, b) => a[0] - b[0]);
