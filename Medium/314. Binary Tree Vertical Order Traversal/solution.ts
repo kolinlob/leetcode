@@ -1,7 +1,9 @@
 function verticalOrder(root: TreeNode | null): number[][] {
   if (root == null) return [];
-  let res: number[][] = new Array(201);
-  let queue: [TreeNode, number][] = [[root, 100]];
+
+  let res: number[][] = [];
+  let columns = new Map<number, number[]>();
+  let queue: [TreeNode, number][] = [[root, 0]];
 
   while (queue.length > 0) {
     let len = queue.length;
@@ -9,13 +11,16 @@ function verticalOrder(root: TreeNode | null): number[][] {
     for (let i = 0; i < len; ++i) {
       let [node, index] = queue.shift();
 
-      if (res[index] == undefined) res[index] = [node.val];
-      else res[index].push(node.val);
+      if (columns.has(index)) columns.get(index).push(node.val);
+      else columns.set(index, [node.val]);
 
       node.left && queue.push([node.left, index - 1]);
       node.right && queue.push([node.right, index + 1]);
     }
   }
 
-  return res.filter((x) => x);
+  let cols = [...columns.keys()].sort((a, b) => a - b);
+  for (let index of cols) res.push(columns.get(index));
+
+  return res;
 }
