@@ -13,10 +13,15 @@ class WordDistance {
     let key = word1 + "&" + word2;
 
     if (!this.mins.has(key)) {
-      let min = Infinity;
-      for (let i of this.map.get(word1))
-        for (let j of this.map.get(word2))
-            min = Math.min(min, Math.abs(i - j));
+      let w1 = this.map.get(word1);
+      let w2 = this.map.get(word2);
+
+      let min = Infinity, i = 0, j = 0;
+      while (i < w1.length && j < w2.length) {
+        min = Math.min(min, Math.abs(w1[i] - w2[j]));
+        if (w1[i] > w2[j]) j++;
+        else i++;
+      }
 
       this.mins.set(key, min);
     }
