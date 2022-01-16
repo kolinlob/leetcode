@@ -9,7 +9,7 @@ function maxDistToClosest(seats: number[]): number {
   for (let i = left; i < seats.length - right; ++i) {
     if (seats[i] == 1) cur = 0;
     else cur++;
-    mid = Math.max(mid, Math.ceil(cur / 2));
+    mid = Math.max(mid, (cur + 1) >> 1);
   }
 
   return Math.max(left, mid, right);
