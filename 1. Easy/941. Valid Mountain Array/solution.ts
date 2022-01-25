@@ -15,3 +15,16 @@ function validMountainArray(arr: number[]): boolean {
 
   return up == false;
 }
+
+
+function validMountainArray(arr: number[]): boolean {
+  let i = 0, n = arr.length - 1;
+
+  while (i < n && arr[i] < arr[i + 1]) i++;
+
+  if (i == 0 || i == n) return false;
+
+  while (i < n && arr[i] > arr[i + 1]) i++;
+
+  return i == n;
+}
