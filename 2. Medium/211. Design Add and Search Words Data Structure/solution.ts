@@ -20,7 +20,7 @@ class WordDictionary {
     return this.find(word, this.root);
   }
 
-  find(word: string, node: any): boolean {
+  private find(word: string, node: any): boolean {
     for (let i = 0; i < word.length; ++i) {
       if (word[i] == ".") {
         for (let c in node) {
