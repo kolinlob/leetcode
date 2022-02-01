@@ -3,6 +3,7 @@
  */
 function serialize(root: TreeNode | null): string {
   if (root == null) return "";
+
   const res: number[] = [];
   const queue = [root];
 
@@ -24,27 +25,25 @@ function serialize(root: TreeNode | null): string {
  * Decodes your encoded data to tree.
  */
 function deserialize(data: string): TreeNode | null {
-  if (data == null) return null;
+  if (data == null || data == "") return null;
 
   const array = data.split(",");
-  if (array.length == 0 || array[0] == "") return null;
-
   const root = new TreeNode(Number(array.shift()));
   const queue = [root];
 
   while (queue.length) {
     let node = queue.shift();
-    let nextValue;
 
-    nextValue = array.shift();
-    node.left = nextValue ? new TreeNode(Number(nextValue)) : null;
-
-    nextValue = array.shift();
-    node.right = nextValue ? new TreeNode(Number(nextValue)) : null;
+    node.left = tryGetNode(array.shift());
+    node.right = tryGetNode(array.shift());
 
     node.left && queue.push(node.left);
     node.right && queue.push(node.right);
   }
 
   return root;
+
+  function tryGetNode(nextValue: string | undefined | null) {
+    return nextValue ? new TreeNode(Number(nextValue)) : null;
+  }
 }
