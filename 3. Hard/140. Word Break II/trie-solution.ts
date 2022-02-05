@@ -9,7 +9,7 @@ function wordBreak(s: string, wordDict: string[]): string[] {
 
   function trySentence(cur: string[], start: number): void {
     if (start == s.length) {
-      res.push([...cur]);
+      res.push(cur);
       return;
     }
 
