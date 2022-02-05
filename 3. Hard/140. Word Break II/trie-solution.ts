@@ -1,29 +1,22 @@
 function wordBreak(s: string, wordDict: string[]): string[] {
-  let trie = new Trie();
-
-  for (let word of wordDict)
-    trie.insert(word);
-
   let res = [];
 
-  for (let i = 0; i < s.length; ++i) {
-    const word = s.slice(0, i + 1);
-    if (trie.contains(word)) 
-        trySentence(word, i + 1);
-  }
+  let trie = new Trie();
+  for (let word of wordDict) trie.insert(word);
 
-  return res;
+  trySentence([], 0);
+  return res.map((x) => x.join(" "));
 
-  function trySentence(cur: string, start: number): void {
+  function trySentence(cur: string[], start: number): void {
     if (start == s.length) {
-      res.push(cur);
+      res.push([...cur]);
       return;
     }
 
     for (let i = start; i < s.length; ++i) {
       const word = s.slice(start, i + 1);
       if (trie.contains(word))
-        trySentence(cur + " " + word, i + 1);
+        trySentence([...cur, word], i + 1);
     }
   }
 }
