@@ -5,10 +5,7 @@ function subarraySum(nums: number[], k: number): number {
 
   for (let i = 0; i < nums.length; ++i) {
     sum += nums[i];
-
-    if (map.has(sum - k))
-        res += map.get(sum - k);
-
+    res += map.get(sum - k) ?? 0;
     map.set(sum, 1 + (map.get(sum) ?? 0));
   }
 
