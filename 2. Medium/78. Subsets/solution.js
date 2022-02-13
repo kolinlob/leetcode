@@ -9,7 +9,7 @@ var subsets = function (nums) {
     const len = res.length;
 
     for (let j = 0; j < len; j++)
-        res.push([res[j], ...nums[i]]);
+        res.push([...res[j], nums[i]]);
   }
 
   return res;
